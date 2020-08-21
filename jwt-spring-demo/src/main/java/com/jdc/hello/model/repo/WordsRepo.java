@@ -1,5 +1,8 @@
 package com.jdc.hello.model.repo;
 
-public interface WordsRepo {
+import com.jdc.hello.model.BaseRepository;
+import com.jdc.hello.model.entity.Words;
+
+public interface WordsRepo extends BaseRepository<Words, Integer>{
 
 }
