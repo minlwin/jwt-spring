@@ -14,4 +14,9 @@ public class Member {
 	private String name;
 	private String phone;
 	private String password;
+	private Role role;
+	
+	public enum Role {
+		Admin, Member
+	}
 }
