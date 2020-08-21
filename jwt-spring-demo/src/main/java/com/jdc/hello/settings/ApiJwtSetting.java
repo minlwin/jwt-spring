@@ -13,7 +13,6 @@ import com.jdc.spring.jwt.JwtConfiguration;
 @EnableJpaRepositories(basePackages = "com.jdc.hello.model.repo", repositoryBaseClass = BaseRepositoryImpl.class)
 public class ApiJwtSetting implements JwtConfiguration {
 	
-	
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

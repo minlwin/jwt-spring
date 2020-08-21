@@ -33,9 +33,8 @@ public class ApiSecuritySetting extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and()
-			.csrf().disable()
-			.authorizeRequests().antMatchers("/api/security/login", "/api/security/signup").permitAll()
+		http.csrf().disable()
+			.authorizeRequests().antMatchers("/security/login", "/security/signup").permitAll()
 			.anyRequest().authenticated().and()
 			.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 	}
