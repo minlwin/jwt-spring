@@ -1,0 +1,5 @@
+{
+	"properties" : [
+		{ "name" : "app.query.member.count.email"}
+	]
+}
