@@ -18,5 +18,4 @@ public class ApiJwtSetting implements JwtConfiguration {
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
 }

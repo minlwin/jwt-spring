@@ -45,4 +45,8 @@ public class MemberService {
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		repo.save(member);
 	}
+
+	public boolean thereIsNoUser() {
+		return repo.count() == 0;
+	}
 }
