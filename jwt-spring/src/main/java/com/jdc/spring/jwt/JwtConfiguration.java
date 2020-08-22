@@ -6,8 +6,25 @@ import com.jdc.spring.jwt.services.JwtTokenAdvice;
 import com.jdc.spring.jwt.services.JwtTokenFilter;
 import com.jdc.spring.jwt.services.JwtTokenProvider;
 
+/**
+ * <h3>Base Configuration </h3>
+ * 
+ * <p>
+ * If you want to use JWT-Spring Library, You have to implement JwtConfiguration Interface.
+ * This interface contains default Beans for JWT Token Base Authentication.
+ * </p>
+ * 
+ * @author minlwin
+ * @since 2020/08/21
+ *
+ */
 public interface JwtConfiguration {
 
+	/**
+	 * tokenAdvice 
+	 * 
+	 * @return
+	 */
 	@Bean
 	default JwtTokenAdvice tokenAdvice() {
 		return new JwtTokenAdvice(tokenProvider());
