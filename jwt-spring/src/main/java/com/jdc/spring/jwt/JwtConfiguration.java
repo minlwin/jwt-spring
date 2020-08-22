@@ -34,7 +34,7 @@ public interface JwtConfiguration {
 			
 			@Override
 			public int lifeTimeInMinutes() {
-				return 15;
+				return 1;
 			}
 			
 			@Override

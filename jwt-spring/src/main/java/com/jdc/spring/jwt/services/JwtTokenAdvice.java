@@ -7,6 +7,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -45,7 +46,7 @@ public class JwtTokenAdvice implements ResponseBodyAdvice<Object>{
 	}
 
 	private boolean validUser(Authentication auth) {
-		return null != auth && auth.isAuthenticated() && !"anonymousUser".equals(auth.getName());
+		return null != auth && !(auth instanceof AnonymousAuthenticationToken);
 	}
 
 }

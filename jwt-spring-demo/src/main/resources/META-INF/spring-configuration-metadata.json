@@ -1,5 +1,8 @@
 {
 	"properties" : [
-		{ "name" : "app.query.member.count.email"}
+		{ "name" : "app.query.member.count.email"},
+		{ "name" : "app.jwt.token.name" },
+		{ "name" : "app.jwt.token.issuer" },
+		{ "name" : "app.jwt.token.lifetime" }
 	]
 }

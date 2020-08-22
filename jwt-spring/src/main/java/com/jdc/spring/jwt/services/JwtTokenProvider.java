@@ -2,6 +2,7 @@ package com.jdc.spring.jwt.services;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.crypto.SecretKey;
@@ -11,7 +12,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.util.StringUtils;
 
 import com.jdc.spring.jwt.JwtSettings;
 
@@ -35,26 +35,22 @@ public class JwtTokenProvider {
 
 	public Authentication parse(HttpServletRequest request) {
 		
-		try {
-			String token = request.getHeader(tokenName());
+		String token = request.getHeader(tokenName());
+		
+		if(null != token) {
+			JwtParser parser = Jwts.parserBuilder()
+					.requireIssuer(settings.issuer())						
+					.setSigningKey(key)
+					.build();
 			
-			if(!StringUtils.isEmpty(token)) {
-				
-				JwtParser parser = Jwts.parserBuilder()
-						.requireIssuer(settings.issuer())						
-						.setSigningKey(key)
-						.build();
-				
-				Jws<Claims> jws = parser.parseClaimsJws(token);
-				
-				String userName = jws.getBody().getSubject();
-				String [] roles = (String[]) jws.getBody().get("rol");
-				
-				return new UsernamePasswordAuthenticationToken(userName, null, AuthorityUtils.createAuthorityList(roles));
-			}
+			Jws<Claims> jws = parser.parseClaimsJws(token);
 			
-		} catch (Exception e) {
-			e.printStackTrace();
+			String userName = jws.getBody().getSubject();
+			@SuppressWarnings("unchecked")
+			List<String> roles =  (List<String>) jws.getBody().get("rol");
+			
+			return new UsernamePasswordAuthenticationToken(userName, null, AuthorityUtils.createAuthorityList(roles.toArray(new String[roles.size()])));
+			
 		}
 		
 		return null;

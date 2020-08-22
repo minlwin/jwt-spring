@@ -3,6 +3,8 @@ package com.jdc.hello.model.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
@@ -13,6 +15,7 @@ public class Member {
 	private String email;
 	private String name;
 	private String phone;
+	@JsonIgnore
 	private String password;
 	private Role role;
 	
