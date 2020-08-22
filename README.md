@@ -20,5 +20,20 @@ mvn install
 
 Add Dependency to Spring Boots Project
 ```
-
+<dependency>
+	<groupId>com.jdc</groupId>
+	<artifactId>jwt-spring</artifactId>
+	<version>${jwt-spring-version}</version>
+</dependency>
 ```
+
+Write Configuration by Implementing JwtConfiguration Interface
+```
+@Configuration
+public class ApiJwtSetting implements JwtConfiguration {	
+}
+```
+
+## How JWT-Spring Work
+
+
