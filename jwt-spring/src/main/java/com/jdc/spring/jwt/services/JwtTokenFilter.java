@@ -11,6 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.SignatureException;
+
 public class JwtTokenFilter extends OncePerRequestFilter {
 	
 	private JwtTokenProvider provider;
@@ -23,9 +27,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		
-		Authentication auth = provider.parse(request);
-		SecurityContextHolder.getContext().setAuthentication(auth);
+		try {
+			Authentication auth = provider.parse(request);
+			SecurityContextHolder.getContext().setAuthentication(auth);
+		} catch (UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
+			System.err.println("Invalid Token : " + e.getMessage());
+		}
 		filterChain.doFilter(request, response);
 	}
 }
