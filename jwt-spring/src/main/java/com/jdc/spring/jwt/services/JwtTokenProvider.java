@@ -15,9 +15,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import com.jdc.spring.jwt.JwtSettings;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -35,19 +32,19 @@ public class JwtTokenProvider {
 
 	public Authentication parse(HttpServletRequest request) {
 		
-		String token = request.getHeader(tokenName());
+		var token = request.getHeader(tokenName());
 		
 		if(null != token) {
-			JwtParser parser = Jwts.parserBuilder()
+			var parser = Jwts.parserBuilder()
 					.requireIssuer(settings.issuer())						
 					.setSigningKey(key)
 					.build();
 			
-			Jws<Claims> jws = parser.parseClaimsJws(token);
+			var jws = parser.parseClaimsJws(token);
 			
-			String userName = jws.getBody().getSubject();
+			var userName = jws.getBody().getSubject();
 			@SuppressWarnings("unchecked")
-			List<String> roles =  (List<String>) jws.getBody().get("rol");
+			var roles =  (List<String>) jws.getBody().get("rol");
 			
 			return new UsernamePasswordAuthenticationToken(userName, null, AuthorityUtils.createAuthorityList(roles.toArray(new String[roles.size()])));
 			
@@ -59,11 +56,11 @@ public class JwtTokenProvider {
 	public String generate(Authentication auth) {
 		
 		// Expiration
-		Calendar expiration = Calendar.getInstance();
+		var expiration = Calendar.getInstance();
 		expiration.add(Calendar.MINUTE, settings.lifeTimeInMinutes());
 		
 		// Roles
-		Object [] authorities = auth.getAuthorities().stream()
+		var authorities = auth.getAuthorities().stream()
 				.map(a -> a.getAuthority())
 				.collect(Collectors.toList()).toArray();
 		

@@ -34,11 +34,11 @@ public class JwtTokenAdvice implements ResponseBodyAdvice<Object>{
 			ServerHttpResponse response) {
 		
 		
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		var authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		if(validUser(authentication)) {
-			String jwtToken = provider.generate(authentication);
-			ServletServerHttpResponse resp = (ServletServerHttpResponse) response;
+			var jwtToken = provider.generate(authentication);
+			var resp = (ServletServerHttpResponse) response;
 			resp.getServletResponse().addHeader(provider.tokenName(), jwtToken);
 		}
 		
